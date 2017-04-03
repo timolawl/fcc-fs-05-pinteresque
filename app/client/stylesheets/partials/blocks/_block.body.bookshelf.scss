@@ -1,0 +1,46 @@
+// _block.body.bookshelf.scss
+//
+// - display case for .books
+
+.wrapper--bookshelf {
+  @include setWrapper(0, true);
+  height: auto;
+}
+
+.bookshelf {
+  &--complete {
+  
+  }
+
+  &--query {
+    margin-top: 0;
+    border-top: none;
+    background-color: map-get($color-stack, bg--base);
+  }
+}
+
+.book {
+  display: inline-block;
+  border: 1px solid gray;
+  margin: 1rem;
+
+  &__link {
+    // display: inline-block;
+  }
+
+  &__image {
+    display: block; // get rid of white space below images
+  }
+
+  &__lock {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 24px;
+    width: 24px;
+  }
+}
+
+.no-result {
+  padding: 1rem;
+}

@@ -1,0 +1,26 @@
+// style.scss
+
+@charset 'utf-8';
+
+@import 'partials/_settings.global';
+@import 'partials/_settings.colors';
+
+@import 'partials/_tools.aliases';
+@import 'partials/_tools.mixins';
+
+@import 'partials/_generics.resets';
+
+@import 'partials/_element.page';
+@import 'partials/_element.link';
+@import 'partials/_element.typography';
+
+@import 'partials/_objects.wrappers';
+
+// import components here
+@import 'partials/_components.general';
+@import 'partials/_components.page-head';
+@import 'partials/_components.page-body';
+@import 'partials/_components.page-foot';
+
+@import 'partials/_trumps.show-hide';
+@import 'partials/_trumps.alignment';

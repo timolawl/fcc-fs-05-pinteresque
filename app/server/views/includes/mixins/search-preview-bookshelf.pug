@@ -1,0 +1,37 @@
+mixin spb(buttonLabel)
+  section(class=buttonLabel)
+    .wrapper--search
+      form.wrapper__subwrapper--search 
+        if path == 'allbookshelves'
+          label.search__bar.search__bar__label Search
+          input.search__bar.search__bar__input.search__bar__input--allbookshelves
+        if path == 'mybookshelf'
+          select.search__bar__option
+            option(value='add') Search To Add
+            option(value='find') Search To Find
+            input.search__bar.search__bar__input.search__bar__input--mybookshelf
+        if path == 'request'
+          label.search__bar.search__bar__label Search
+          input.search__bar.search__bar__input
+        button.search__bar.search__bar__submit(type='submit') Submit
+    .wrapper--preview.is-not-displayed
+      a.preview__link
+        .preview__title
+      .preview__author
+      .preview__description
+      if buttonLabel
+        button.preview__submit(type='button')= buttonLabel
+      button.preview__close(type='button') &#10005;
+    .wrapper--bookshelf.bookshelf--complete
+    .wrapper--query.is-not-displayed
+      .query__description 
+        span.query__description.query__description__explanatory-string Showing search results for:&nbsp;
+        span.query__description.query__description__query-string
+      button.query__close(type='button') &#10005;
+    .wrapper--bookshelf.bookshelf--query.is-not-displayed
+    //
+      .book: img.book__image(src='http://books.google.com/books/content?id=wiX1O1ZBdYoC&printsec=frontcover&img=1&zoom=1&source=gbs_api')
+      .book: img.book__image(src='http://books.google.com/books/content?id=R7YsowJI9-IC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_ap')
+      .book: img.book__image(src='http://books.google.com/books/content?id=p1MULH7JsTQC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api')
+      .book: img.book__image(src='http://books.google.com/books/content?id=PXa2bby0oQ0C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api')
+
