@@ -1,0 +1,8 @@
+include /includes/header.pug
+form.form(method='post')
+  label.form__label(for='image-link') Image Link
+  input.form__input(type='text' name='image-link' pattern='[^\'"]*' required)
+  label.form__label(for='image-description') Image Description
+  input.form__input(type='text' name='image-description' pattern='.{0,50}' required)
+  input.form__submit(type='submit' formaction='/addbrick' value='Add Brick')
+include /includes/footer.pug

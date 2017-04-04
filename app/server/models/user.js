@@ -1,13 +1,10 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const SALT_WORK_FACTOR = 10;
-
 
 const userSchema = new mongoose.Schema({
   twitterID: { type: String, required: true },
-  twitterDisplayName: { type: String, required: true },
+  twitterScreenName: { type: String, required: true },
   twitterProfileImage: { type: String, required: true }
 });
 
@@ -18,7 +15,8 @@ userSchema.statics.findOrCreate = function (profile, cb) {
     if (err) throw err;
     if (!result) {
       newUser.twitterID = profile.id; // do I need to save token and token secret?
-      newUser.twitterDisplayName = profile.displayName;
+      newUser.twitterScreenName = profile.username;
+      newUser.twitterProfileImage = profile._json.profile_image_url_https;
       
       newUser.save(cb); // interesting statement
     }

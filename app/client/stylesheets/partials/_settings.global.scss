@@ -3,9 +3,9 @@
 // - global variables (excluding color, as that would be in _settings.colors.scss)
 
 // can't seem to use sass maps as they seem to require a 1 to 1 mapping of key to value
-$font-stack--base: 'Source Sans Pro', Helvetica, sans-serif;
-$font-stack--path-bar: 'Raleway', Helvetica, sans-serif;
-$font-stack--books: 'Sanchez', Helvetica, sans-serif; // 'Cormorant Garamond' - poor legibility
+$font-stack--base: Lato, Helvetica, sans-serif;
+//$font-stack--path-bar: 'Raleway', Helvetica, sans-serif;
+//$font-stack--books: 'Sanchez', Helvetica, sans-serif; // 'Cormorant Garamond' - poor legibility
 
 $z-index: (
   dropdown: 9000
@@ -20,4 +20,4 @@ $z-index: (
 // max width overall
 $max-width: 974px;
 
-$paths: index, allbookshelves, mybookshelf, request, pending, completed, settings, signup, login
+$paths: index, addbrick, mybricks, heartedbricks

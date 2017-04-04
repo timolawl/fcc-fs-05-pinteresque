@@ -22,8 +22,6 @@ module.exports = passport => {
   passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-    callbackURL: 'https://timolawl-imgbricks.herokuapp.com/login/twitter/callback'
-      //callbackURL: 'https://timolawl-nightlife.herokuapp.com'
     },
     function (token, tokenSecret, profile, cb) {
       process.nextTick(() => {

@@ -17,23 +17,8 @@
   }
 }
 
-
-// index page banner
-@import 'blocks/_block.body.index.banner';
-
-// request page styling
-@import 'blocks/_block.body.style.request';
-
-// pending/complete page styling
-@import 'blocks/_block.body.style.pending-complete';
-
 // modules:
 // - form styling module
 @import 'blocks/_block.body.form';
-
-// - search/preview/bookshelf module
-@import 'blocks/_block.body.search-book-preview';
-@import 'blocks/_block.body.query';
-@import 'blocks/_block.body.bookshelf';
 
 

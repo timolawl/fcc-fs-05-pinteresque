@@ -7,27 +7,20 @@ html(lang='en')
       meta(name='viewport' content='width=device-width initial-scale=1')
     title imgBrick, a Free Code Camp Project
     script(src='/static/js/pre.bundle.js')
-    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro|Raleway|Sanchez|Cormorant+Garamond')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato')
     link(rel='stylesheet' href='/static/css/style.css')
   body
     nav.site-nav
       ul(class= path)
         a.site-nav__logo(href='/').index: img.site-nav__logo--image(src='/static/img/book--base.svg')
-        li.site-nav__list.allbookshelves: a(href='/allbookshelves') All bookshelves
-        if loggedIn === 'true'
-          li.site-nav__list.mybookshelf: a(href='/mybookshelf') My Bookshelf
-          li.site-nav__list.dropdown-nav.swaps Swaps
-            ul
-              li.dropdown-nav__list: a(href='/request') Request
-              li.dropdown-nav__list: a(href='/pending') Pending
-              li.dropdown-nav__list: a(href='/completed') Completed
-          li.site-nav__list.dropdown-nav.myaccount My Account
-            ul
-              li.dropdown-nav__list: a(href='/settings') Settings
-              li.dropdown-nav__list.logout: a(href='/logout') Log Out
+        if loggedIn
+          li.site-nav__list.addbrick: a(href='/addbrick') Add Brick
+          li.site-nav__list.mybricks: a(href='/mybricks') My Bricks
+          li.site-nav__list.heartedbricks: a(href='/heartedbricks') Hearted Bricks    
+          li.dropdown-nav__list.logout: a(href='/logout') Log Out
         else
-          li.site-nav__list.signup: a(href='/signup') Sign Up
-          li.site-nav__list.login: a(href='/login') Log In
+          li.site-nav__list.login: a(href='/login/twitter') Log In
+  //
     if path != 'index' 
       section.path-bar
         a.path-bar__link(href='/')
