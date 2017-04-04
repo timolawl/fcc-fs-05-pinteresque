@@ -27,8 +27,12 @@ module.exports = (app, passport) => {
   app.route('/heartedbricks')
     .get(isLoggedIn, controller.getHeartedBricks);
 
-  // api paths for ajax calls
+  // bricks of other users
+  app.route('/user/:id')
+    .get(controller.getUserBricks);
 
+/*
+  // api paths for ajax calls
   app.route('/api/allbricks') // login status matters, as own img can be deleted and all hearted
     .get(controller.ajaxAllBricks);
   
@@ -37,6 +41,13 @@ module.exports = (app, passport) => {
 
   app.route('/api/heartedbricks')
     .get(controller.ajaxHeartedBricks);
+
+  app.route('/api/userbricks/:id')
+    .get(controller.ajaxUserBricks);
+*/
+
+  app.route('/api/bricks')
+    .get(controller.ajaxBricks);
 
 
 

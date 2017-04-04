@@ -3,7 +3,6 @@
 // - site navigation styling
 
 .site-nav {
-  //margin-right: 1rem;
   text-align: right;
 
   &__logo {
@@ -42,32 +41,4 @@
   }
 }
 
-.dropdown-nav {
-  padding: 1rem;
-  cursor: default;
 
-  & > ul {
-    z-index: map-get($z-index, dropdown);
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 110px; // explicitly set such that both drop downs are of the same width
-    text-align: left;
-    display: none; // will be displayed when parent is hovered over
-  }
-
-  &__list {
-    list-style-type: none;
-    background-color: map-get($color-stack, bg--base);
-  }
-
-  &:hover {
-    & > ul {
-      display: block;
-    }
-  }
-}
-
-ul.index .dropdown-nav__list {
-  background-color: map-get($color-stack, bg--selected);
-}

@@ -2,10 +2,13 @@
 
 const mongoose = require('mongoose');
 
+const Image = require('./image');
+
 const userSchema = new mongoose.Schema({
   twitterID: { type: String, required: true },
   twitterScreenName: { type: String, required: true },
-  twitterProfileImage: { type: String, required: true }
+  twitterProfileImage: { type: String, required: true },
+  heartedBricks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }]
 });
 
 userSchema.statics.findOrCreate = function (profile, cb) {
