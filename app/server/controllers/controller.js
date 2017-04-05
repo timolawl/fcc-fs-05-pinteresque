@@ -69,24 +69,48 @@ function controller () {
     const path = sanitizedReferer.match(/^http:\/\/localhost:[35]000(.*)$/i) && 
       sanitizedReferer.match(/^http:\/\/localhost:[35]000(.*)$/i)[1].toLowerCase();
 
+    let dbQuery = null;
+
     if (path) {
 
-      // searching user first assumes login
-
       if (path.match(/^\/$/)) {
-        Image.find({}).then(images => res.json(images));
+        dbQuery = {};
       } else if (path.match(/^\/mybricks\/?$/i)) {
-        Image.find({ linker: req.user.id }).then(images => res.json(images));
+        dbQuery = { linker: req.user.id };
       } else if (path.match(/^\/heartedbricks\/?$/i)) {
         User.findOne({ _id: req.user.id }).then(user => {
-            Image.find({ _id: { $in: user.heartedBricks }}).then(images => res.json(images));
+            Image.find({ _id: { $in: user.heartedBricks }}).lean().then(images => {
+              res.json(images.map(image => { image.userHearted = true; return image; }));
+            });
         });
       } else if (path.match(/^\/user\/.*/i)) {
         let user = path.match(/^\/user\/(.*)/i) && path.match(/^\/user\/(.*)/i)[1];
         if (user) {
-          Image.find({ linkerScreenName: user }).then(images => res.json(images));
+          dbQuery = { linkerScreenName: user };
         }
       }
+
+      // if path is not the hearted path:
+      if (dbQuery) {
+        // if user is logged in:
+        if (req.user) {
+          User.findOne({ _id: req.user.id }).then(user => {
+            Image.find(dbQuery).lean().then(images => {
+              res.json(images.map(image => {
+                if (user.heartedBricks.indexOf(image._id) > -1) { // exists as a hearted brick
+                  image.userHearted = true;
+                  return image;
+                }
+              }));
+            });
+          });
+        }
+        // user is not logged in:
+        else {
+          Image.find(dbQuery).then(images => res.json(images));
+        }
+      }
+
     }
   };
 

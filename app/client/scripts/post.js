@@ -34,6 +34,10 @@ function createBrick (datum) {
   user.alt = '@' + datum.linkerScreenName;
   counter.textContent = datum.hearts;
 
+  if (datum.userHearted) {
+    heartFill.classList.add('is-hearted');
+  }
+
   // send: the id of the brick, the user can be inferred from the req itself.
   newBrick.querySelector('.brick__favorite').addEventListener('click', () => {
     fetch('/api/bricks', { method: 'POST', credentials: 'same-origin' , headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: datum._id }) })
