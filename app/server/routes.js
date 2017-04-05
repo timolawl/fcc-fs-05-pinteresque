@@ -47,7 +47,9 @@ module.exports = (app, passport) => {
 */
 
   app.route('/api/bricks')
-    .get(controller.ajaxBricks);
+    .get(controller.ajaxBricks)
+    .post(controller.ajaxHeart)
+    .delete(controller.ajaxDelete);
 
 
 

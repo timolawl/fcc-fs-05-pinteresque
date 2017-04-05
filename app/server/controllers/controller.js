@@ -27,6 +27,8 @@ function controller () {
     const newImage = new Image();
     newImage.link = req.body.link;
     newImage.linker = req.user.id;
+    newImage.linkerScreenName = req.user.twitterScreenName;
+    newImage.linkerProfileImage = req.user.twitterProfileImage;
     newImage.title = req.body.title;
     
     newImage.save(err => {
@@ -59,7 +61,7 @@ function controller () {
     // but in dev, match localhost:x000/
     // validate the referrer first?
     console.log(req.headers.referer);
-    const sanitizedReferer = req.headers.referer.replace(/\$/g, '');
+    const sanitizedReferer = sanitizeString(req.headers.referer);
     /*
     if (sanitizedReferer.match(/^https:\/\/timolawl-imgbrick\.herokuapp\.com\//) ||
       sanitizedReferer.match(/^http:\/\/localhost:[35]000\//)) {
@@ -83,58 +85,50 @@ function controller () {
       } else if (path.match(/^\/user\/.*/i)) {
         let user = path.match(/^\/user\/(.*)/i) && path.match(/^\/user\/(.*)/i)[1];
         if (user) {
-          User.findOne({ twitterScreenName: user }).then(user => {
-            Image.find({ linker: user._id }).then(images => res.json(images));
-          });
+          Image.find({ linkerScreenName: user }).then(images => res.json(images));
         }
       }
     }
   };
 
+  this.ajaxHeart = (req, res) => {
+    User.findOne({ $and: [{ _id: req.user.id }, { heartedBricks: { $nin: [req.body.id] }}]}).exec().then(user => {
+      if (user) {
+        user.heartedBricks.push(req.body.id); // add the image to be hearted by user
+        user.save();
+        Image.findOneAndUpdate({ _id: req.body.id }, { $inc: { hearts: 1 }}, { new: true }).then(image => res.json(image))
+        .catch(err => console.error(err));
+      }
+      else { // user has already hearted the brick
+        User.findOneAndUpdate({ _id: req.user.id }, { $pull: { heartedBricks: req.body.id }}, { returnNewDocument: true }, err => {
+          if (err) throw err;
+            Image.findOneAndUpdate({ _id: req.body.id }, { $inc: { hearts: -1 }}, { new: true }).then(image => res.json(image));
+        });
+      }
+    })
+    .catch(err => console.error(err));
+  };
 
-  // api paths for ajax calls
-  this.ajaxAllBricks = (req, res) => {
-    console.log(req);
-    // this call needs to return all bricks
-    // actually, i don't it's needed is it?
-    // I mean I could potentially highlight which ones belong to the user
-    /*
-    if (req.isAuthenticated()) {
-      User.findOne({ _id: req.user.id }).exec().then(user => {
-        res.json(user);
+  this.ajaxDelete = (req, res) => {
+    // validate user ability to remove image first
+    Image.findOneAndRemove({ $and: [{ _id: req.body.id }, { linker: req.user.id }]}).exec().then(image => {
+      // go through all users and remove their hearts from this item since it no longer exists
+      //User.find({ heartedBricks: { $in: [req.body.id] }}).then(users => 
+      User.update({ heartedBricks: { $in: [req.body.id] }}, { $pull: { heartedBricks: req.body.id}}, { multi: true }, (err) => {
+        if (err) throw err;
+        else res.json({ message: 'success'});
       });
-    } 
-    */
-    Image.find({}).then(images => {
-      // provide only the needed information:
-      // image, hearts, and linker screen_name and profile picture
-      // clicking on the linker picture will go to the user's images
-      // at /screen_name
-      res.json(images);
-    });
-
+    })
+    .catch(err => console.error(err)); 
   };
 
-  this.ajaxMyBricks = (req, res) => {
-    console.log(req.headers.referer);
-  
-  };
-
-  this.ajaxHeartedBricks = (req, res) => {
-    
-  };
-
-  this.ajaxUserBricks = (req, res) => {    
-    // sanitize this first then use it:
-    const sanitizedId = req.params.id.replace(/\$/g, '');
-    User.findOne({ twitterScreenName: sanitizedId }).then(user => {
-      Image.find({ linker: user }).then(images => {
-        res.json(images);
-      });
-    });
-  };
-  
 
 }
+
+
+function sanitizeString (str) {
+  return str.replace(/\$/g, '');
+}
+
 
 module.exports = controller;

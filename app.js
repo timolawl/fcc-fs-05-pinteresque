@@ -58,7 +58,10 @@ app.locals.basedir = app.get('views'); // allows for pug includes
 
 app.set('port', port);
 
+
+// https://www.npmjs.com/package/body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 app.use(compression()); // compresses all req and res
