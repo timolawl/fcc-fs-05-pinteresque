@@ -8,15 +8,7 @@ module.exports = (app, passport) => {
 
   app.route('/')
     .get(controller.getAllBricks);
-  /*
-    .get((req, res) => {
-      if (req.isAuthenticated())
-      // join main socket io room (this room is needed as at this level, polls can be added and deleted at will) and any previous room
-        res.render('bricks', { loggedIn: true, path: 'index' }); //loggedIn still needed to not display the 'sign up' button
-      else res.render('bricks', { path: 'index' });
-    });
-    */
-
+ 
   app.route('/addbrick')
     .get(isLoggedIn, controller.getAddBrick)
     .post(isLoggedIn, controller.postBrick);
@@ -31,25 +23,12 @@ module.exports = (app, passport) => {
   app.route('/user/:id')
     .get(controller.getUserBricks);
 
-/*
-  // api paths for ajax calls
-  app.route('/api/allbricks') // login status matters, as own img can be deleted and all hearted
-    .get(controller.ajaxAllBricks);
-  
-  app.route('/api/mybricks')
-    .get(controller.ajaxMyBricks);
 
-  app.route('/api/heartedbricks')
-    .get(controller.ajaxHeartedBricks);
-
-  app.route('/api/userbricks/:id')
-    .get(controller.ajaxUserBricks);
-*/
-
+  // ajax endpoint
   app.route('/api/bricks')
     .get(controller.ajaxBricks)
-    .post(controller.ajaxHeart)
-    .delete(controller.ajaxDelete);
+    .post(isLoggedIn, controller.ajaxHeart)
+    .delete(isLoggedIn, controller.ajaxDelete);
 
 
 
@@ -79,11 +58,4 @@ function isLoggedIn (req, res, next) {
     return next();
   res.redirect('/');
 }
-/*
-function isNotLoggedIn (req, res, next) {
-  if (req.isAuthenticated())
-    res.redirect('/mybookshelf');
-  else return next();
-}
-*/
 

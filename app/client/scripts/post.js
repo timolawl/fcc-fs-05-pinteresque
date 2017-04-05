@@ -11,7 +11,6 @@ window.onload = function () {
 
 // load images from json
 function loadImages (data) {
-  console.log(data);
   for (let i = 0; i < data.length; i++) {
     createBrick(data[i]);
   }
@@ -19,19 +18,20 @@ function loadImages (data) {
 
 function createBrick (datum) {
   const newBrick = document.querySelector('.masonry-element').cloneNode(true);
-  console.log(newBrick);
 
   const counter = newBrick.querySelector('.brick__counter');
   const heartFill = newBrick.querySelector('.brick__heart--fill');
+  const image = newBrick.querySelector('.brick__image');
+  const user = newBrick.querySelector('.brick__user');
 
   newBrick.firstChild.setAttribute('data-id', datum._id);
-  newBrick.querySelector('.brick__image').src = datum.link;
-  newBrick.querySelector('.brick__image').title = datum.title;
-  newBrick.querySelector('.brick__image').alt = datum.title;
+  image.src = datum.link;
+  image.title = datum.title;
+  image.alt = datum.title;
   newBrick.querySelector('.brick__title').textContent = datum.title;
-  newBrick.querySelector('.brick__user').src = datum.linkerProfileImage;
-  newBrick.querySelector('.brick__user').title = '@' + datum.linkerScreenName;
-  newBrick.querySelector('.brick__user').alt = '@' + datum.linkerScreenName;
+  user.src = datum.linkerProfileImage;
+  user.title = '@' + datum.linkerScreenName;
+  user.alt = '@' + datum.linkerScreenName;
   counter.textContent = datum.hearts;
 
   // send: the id of the brick, the user can be inferred from the req itself.

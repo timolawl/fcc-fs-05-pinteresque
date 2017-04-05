@@ -22,7 +22,6 @@ function controller () {
   };
   
   this.postBrick = (req, res) => {
-    console.log(req.user.twitterScreenName);
     // save the new image information to image collection
     const newImage = new Image();
     newImage.link = req.body.link;
@@ -60,7 +59,6 @@ function controller () {
     // match https://timolawl-imgbrick.herokuapp.com/
     // but in dev, match localhost:x000/
     // validate the referrer first?
-    console.log(req.headers.referer);
     const sanitizedReferer = sanitizeString(req.headers.referer);
     /*
     if (sanitizedReferer.match(/^https:\/\/timolawl-imgbrick\.herokuapp\.com\//) ||
@@ -71,9 +69,10 @@ function controller () {
     const path = sanitizedReferer.match(/^http:\/\/localhost:[35]000(.*)$/i) && 
       sanitizedReferer.match(/^http:\/\/localhost:[35]000(.*)$/i)[1].toLowerCase();
 
-    console.log(path);
-
     if (path) {
+
+      // searching user first assumes login
+
       if (path.match(/^\/$/)) {
         Image.find({}).then(images => res.json(images));
       } else if (path.match(/^\/mybricks\/?$/i)) {
@@ -113,7 +112,6 @@ function controller () {
     // validate user ability to remove image first
     Image.findOneAndRemove({ $and: [{ _id: req.body.id }, { linker: req.user.id }]}).exec().then(image => {
       // go through all users and remove their hearts from this item since it no longer exists
-      //User.find({ heartedBricks: { $in: [req.body.id] }}).then(users => 
       User.update({ heartedBricks: { $in: [req.body.id] }}, { $pull: { heartedBricks: req.body.id}}, { multi: true }, (err) => {
         if (err) throw err;
         else res.json({ message: 'success'});
