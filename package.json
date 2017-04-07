@@ -10,14 +10,14 @@
   "sasslintConfig": ".sass-lint.yml",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/timolawl/fcc-imgbrick.git"
+    "url": "git+ssh://git@github.com/timolawl/fcc-pinteresque.git"
   },
   "author": "Tim Chiang <timolawl@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/timolawl/fcc-imgbrick/issues"
+    "url": "https://github.com/timolawl/fcc-pinteresque/issues"
   },
-  "homepage": "https://github.com/timolawl/fcc-imgbrick#readme",
+  "homepage": "https://github.com/timolawl/fcc-pinteresque#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
     "compression": "^1.6.2",

@@ -2,14 +2,14 @@
 //
 // - used to style individual esque
 
-.wrapper--general {
-  margin-top: 51px; // site-nav pixel height
-  background-color: map-get($color-stack, bg--base);
+.wrapper--esque {
   padding: 0.5rem;
+  background-color: map-get($color-stack, bg--base);
 }
 
-.wrapper--esques {
-  //background-color: #f0f0f0; // #505050;
+.wrapper--esquewall {
+  background-color: map-get($color-stack, bg--base);
+  //padding: 0.5rem;
 }
 
 .esque {

@@ -2,13 +2,20 @@
 //
 // form element
 
+.wrapper--form {
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .message {
   text-align: center;
 }
 
 .form {
   width: 80%;
-  max-width: $max-width;
+  max-width: $form-width;
   margin: 0 auto;
 
   &__label {

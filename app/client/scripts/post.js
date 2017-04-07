@@ -19,7 +19,7 @@ function loadImages (data) {
 
   const allImages = esques.querySelectorAll('.esque__image, .esque__user');
   imagesLoaded(allImages, () => {
-    const container = document.querySelector('.wrapper--esques');
+    const container = document.querySelector('.wrapper--esquewall');
     container.appendChild(esques);
 
     const msnry = new Masonry(container, {

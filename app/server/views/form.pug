@@ -1,8 +1,9 @@
 include /includes/header.pug
-form.form(method='post')
-  label.form__label(for='link') Image Link
-  input.form__input(type='text' name='link' pattern='[^\'"]*' required)
-  label.form__label(for='title') Image Title
-  input.form__input(type='text' name='title' pattern='.{0,50}' required)
-  input.form__submit(type='submit' formaction='/addesque' value='Add Esque')
+section.wrapper--max-width.wrapper--form
+  form.form(method='post')
+    label.form__label(for='link') Image Link
+    input.form__input(type='text' name='link' pattern='[^\'"]*' required)
+    label.form__label(for='title') Image Title
+    input.form__input(type='text' name='title' pattern='.{0,50}' required)
+    input.form__submit(type='submit' formaction='/addesque' value='Add Esque')
 include /includes/footer.pug

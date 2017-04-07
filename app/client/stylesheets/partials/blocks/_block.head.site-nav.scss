@@ -3,13 +3,18 @@
 // - site navigation styling
 
 .site-nav {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   text-align: right;
   z-index: map-get($z-index, site-nav);
   background: #fff;
+
+  &--document-flow-placeholder {
+    height: 51px;
+    width: 100%;
+  }
 
   &__logo {
     position: absolute;

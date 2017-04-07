@@ -9,13 +9,15 @@ html(lang='en')
     link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato|Pacifico')
     link(rel='stylesheet' href='/static/css/style.css')
   body
-    nav.site-nav
-      ul(class= path)
-        a.site-nav__logo(href='/').index: .site-nav__logo--text Pinteresque
-        if loggedIn
-          li.site-nav__list.addesque: a(href='/addesque') Add Esque
-          li.site-nav__list.myesques: a(href='/myesques') My Esques
-          li.site-nav__list.heartedesques: a(href='/heartedesques') Hearted Esques
-          li.site-nav__list.logout: a(href='/logout') Log Out
-        else
-          li.site-nav__list.login: a(href='/login/twitter') Log In
+    .wrapper--max-width
+      nav.site-nav
+        ul(class= path)
+          a.site-nav__logo(href='/').index: .site-nav__logo--text Pinteresque
+          if loggedIn
+            li.site-nav__list.addesque: a(href='/addesque') Add Esque
+            li.site-nav__list.myesques: a(href='/myesques') My Esques
+            li.site-nav__list.heartedesques: a(href='/heartedesques') Hearted Esques
+            li.site-nav__list.logout: a(href='/logout') Log Out
+          else
+            li.site-nav__list.login: a(href='/login/twitter') Log In
+      .site-nav--document-flow-placeholder.is-displayed
