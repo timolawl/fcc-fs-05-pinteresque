@@ -2,14 +2,101 @@
 //
 // - used to style individual brick
 
+.wrapper--general {
+  margin-top: 51px; // site-nav pixel height
+  background-color: map-get($color-stack, bg--base);
+  padding: 0.5rem;
+}
+
 .wrapper--bricks {
-  
+  //background-color: #f0f0f0; // #505050;
 }
 
 .brick {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: #fff; // #703030;
+  overflow: hidden;
+  &:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
 
+  &__image {
+    display: block;
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+
+  &__options {
+
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__title {
+    color: map-get($color-stack, font--base); // #7e827a;
+    font-size: 0.9rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    
+  }
+
+  &__user {
+    width: 32px;
+    height: 32px;
+    margin-right: 0.5rem;
+    
+    vertical-align: bottom;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__favorite {
+    border: none;
+    width: 48px;
+    height: 32px;
+    padding: 0.25rem;
+    margin-left: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    @include setBgColorAndHover();
+  }
+
+  &__counter {
+    margin-right: 0.25rem;
+  }
+
+  &__heart {
+    width: 16px;
+    height: 16px;
+
+    &--fill {
+      fill: #cacaca;
+      &.is-hearted {
+        fill: #911e06;
+      }
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 24px;
+    width: 24px;
+    padding: 0 0 1px 0;
+    border: none;
+    display: none;
+    @include setBgColorAndHover();
+  }
 }
-
+/*
 .is-hearted {
   fill: #911e06;
 }
+*/

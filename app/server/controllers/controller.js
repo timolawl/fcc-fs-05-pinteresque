@@ -58,7 +58,7 @@ function controller () {
   this.ajaxBricks = (req, res) => {
     // match https://timolawl-imgbrick.herokuapp.com/
     // but in dev, match localhost:x000/
-    // validate the referrer first?
+    // referer can be spoofed but this is a public get call
     const sanitizedReferer = sanitizeString(req.headers.referer);
     /*
     if (sanitizedReferer.match(/^https:\/\/timolawl-imgbrick\.herokuapp\.com\//) ||
@@ -99,8 +99,8 @@ function controller () {
               res.json(images.map(image => {
                 if (user.heartedBricks.indexOf(image._id) > -1) { // exists as a hearted brick
                   image.userHearted = true;
-                  return image;
                 }
+                return image;
               }));
             });
           });

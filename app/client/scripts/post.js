@@ -11,12 +11,27 @@ window.onload = function () {
 
 // load images from json
 function loadImages (data) {
+  const bricks = new DocumentFragment();
+
   for (let i = 0; i < data.length; i++) {
-    createBrick(data[i]);
+    createBrick(data[i], bricks);
   }
+
+  const allImages = bricks.querySelectorAll('.brick__image, .brick__user');
+  imagesLoaded(allImages, () => {
+    const container = document.querySelector('.wrapper--bricks');
+    container.appendChild(bricks);
+
+    const msnry = new Masonry(container, {
+      itemSelector: '.masonry-element',
+      columnWidth: '.masonry-element-sizer',
+      percentPosition: true
+    });
+
+  });
 }
 
-function createBrick (datum) {
+function createBrick (datum, fragment) {
   const newBrick = document.querySelector('.masonry-element').cloneNode(true);
 
   const counter = newBrick.querySelector('.brick__counter');
@@ -38,6 +53,10 @@ function createBrick (datum) {
     heartFill.classList.add('is-hearted');
   }
 
+  user.addEventListener('click', () => {
+    location.href = `${location.protocol}//${location.host}/user/${datum.linkerScreenName}`;
+  });
+
   // send: the id of the brick, the user can be inferred from the req itself.
   newBrick.querySelector('.brick__favorite').addEventListener('click', () => {
     fetch('/api/bricks', { method: 'POST', credentials: 'same-origin' , headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: datum._id }) })
@@ -51,6 +70,14 @@ function createBrick (datum) {
 
 
   if (newBrick.querySelector('.brick__close')) { // or check if path is mybricks
+    newBrick.querySelector('.brick').addEventListener('mouseover', () => {
+      newBrick.querySelector('.brick__close').classList.add('is-displayed');
+    });
+
+    newBrick.querySelector('.brick').addEventListener('mouseout', () => {
+      newBrick.querySelector('.brick__close').classList.remove('is-displayed');
+    });
+
     newBrick.querySelector('.brick__close').addEventListener('click', () => {
       fetch('/api/bricks', { method: 'DELETE', credentials: 'same-origin', headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Methods': 'POST, GET, DELETE' }, body: JSON.stringify({ id: datum._id }) })
         .then(res => res.json())
@@ -64,7 +91,11 @@ function createBrick (datum) {
     });
   }
 
-  document.querySelector('.wrapper--bricks').insertBefore(newBrick, document.querySelector('.masonry-element-sizer'));
+  fragment.appendChild(newBrick);
+
+  
+
+  //document.querySelector('.wrapper--bricks').insertBefore(newBrick, document.querySelector('.masonry-element-sizer'));
   newBrick.classList.remove('is-not-displayed');
 }
 

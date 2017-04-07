@@ -3,46 +3,19 @@ html(lang='en')
   head
     meta(charset='utf-8')
     meta(http-equiv='x-ua-compatible' content='ie=edge')
-    //
-      meta(name='viewport' content='width=device-width initial-scale=1')
+    meta(name='viewport' content='width=device-width initial-scale=1')
     title imgBrick, a Free Code Camp Project
     script(src='/static/js/pre.bundle.js')
-    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato|Pacifico')
     link(rel='stylesheet' href='/static/css/style.css')
   body
     nav.site-nav
       ul(class= path)
-        a.site-nav__logo(href='/').index: img.site-nav__logo--image(src='/static/img/book--base.svg')
+        a.site-nav__logo(href='/').index: .site-nav__logo--text Pinteresque
         if loggedIn
           li.site-nav__list.addbrick: a(href='/addbrick') Add Brick
           li.site-nav__list.mybricks: a(href='/mybricks') My Bricks
-          li.site-nav__list.heartedbricks: a(href='/heartedbricks') Hearted Bricks    
+          li.site-nav__list.heartedbricks: a(href='/heartedbricks') Hearted Bricks
           li.site-nav__list.logout: a(href='/logout') Log Out
         else
           li.site-nav__list.login: a(href='/login/twitter') Log In
-  //
-    if path != 'index' 
-      section.path-bar
-        a.path-bar__link(href='/')
-          .path-bar__subsection.path-bar__subsection--index 
-            .path-bar__text Book Swap
-        if path != 'index'
-          .path-bar__subsection.path-bar__subsection--path
-            if path == 'allbookshelves'
-              .path-bar__text All Bookshelves
-            else if path == 'mybookshelf'
-              .path-bar__text My Bookshelf
-            else if path == 'request'
-              .path-bar__text Request A Swap
-            else if path == 'pending'
-              .path-bar__text Pending Swaps
-            else if path == 'completed'
-              .path-bar__text Completed Swaps
-            else if path == 'signup'
-              .path-bar__text Sign Up
-            else if path == 'login'
-              .path-bar__text Log In
-            else if path == 'settings'
-              .path-bar__text Settings
-            else
-              .path-bar__text Page Not Found

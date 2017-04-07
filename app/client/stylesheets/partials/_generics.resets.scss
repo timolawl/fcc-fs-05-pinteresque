@@ -46,6 +46,9 @@ input[type='submit'] {
 
   &:disabled {
     color: #999;
+    &:hover {
+      cursor: not-allowed;
+    }
   }
 }
 

@@ -1,0 +1,29 @@
+// _block.body.masonry.scss
+//
+// - styling for masonry js elements
+
+.masonry-element {
+  &-sizer {
+    width: 100%;
+    @include breakpoint(baby-bear) {
+      width: 50%;
+    }
+    @include breakpoint(mama-bear) {
+      width: 25%;
+    }
+    @include breakpoint(papa-bear) {
+      width: 20%;
+    }
+  }
+
+  width: 100%;
+  @include breakpoint(baby-bear) {
+    width: 50%;
+  }
+  @include breakpoint(mama-bear) {
+    width: 25%;
+  }
+  @include breakpoint(papa-bear) {
+    width: 20%;
+  }
+}

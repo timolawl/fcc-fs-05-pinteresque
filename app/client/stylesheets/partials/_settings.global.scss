@@ -4,18 +4,21 @@
 
 // can't seem to use sass maps as they seem to require a 1 to 1 mapping of key to value
 $font-stack--base: Lato, Helvetica, sans-serif;
-//$font-stack--path-bar: 'Raleway', Helvetica, sans-serif;
-//$font-stack--books: 'Sanchez', Helvetica, sans-serif; // 'Cormorant Garamond' - poor legibility
+$font-stack--logo: Pacifico, Helvetica, sans-serif;
 
 $z-index: (
-  dropdown: 9000
+  site-nav: 9000
   // modal
   // overlay
   // etc
 );
 
 // width breakpoints
-
+$width-breakpoints: (
+  small: 600px,
+  medium: 900px,
+  large: 1200px // and larger
+);
 
 // max width overall
 $max-width: 974px;
