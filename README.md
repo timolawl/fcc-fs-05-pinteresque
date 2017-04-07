@@ -2,7 +2,7 @@
 
 A full-stack JavaScript application as part of the [Free Code Camp](https://freecodecamp.com "Free Code Camp") curriculum. Dynamic Web Application Basejump #5 - Pinterest Clone App.
 
-Check out the working app here: [https://timolawl-imgbrick.herokuapp.com](https://timolawl-imgbrick.herokuapp.com "Pinterest CLone App").
+Check out the working app here: [https://timolawl-imgesque.herokuapp.com](https://timolawl-imgesque.herokuapp.com "Pinterest CLone App").
 
 #### User stories:
 1. User Story: As an unauthenticated user, I can login with Twitter.

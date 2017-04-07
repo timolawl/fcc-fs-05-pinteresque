@@ -7,26 +7,26 @@ module.exports = (app, passport) => {
   const controller = new Controller();
 
   app.route('/')
-    .get(controller.getAllBricks);
+    .get(controller.getAllEsques);
  
-  app.route('/addbrick')
-    .get(isLoggedIn, controller.getAddBrick)
-    .post(isLoggedIn, controller.postBrick);
+  app.route('/addesque')
+    .get(isLoggedIn, controller.getAddEsque)
+    .post(isLoggedIn, controller.postEsque);
 
-  app.route('/mybricks')
-    .get(isLoggedIn, controller.getMyBricks);
+  app.route('/myesques')
+    .get(isLoggedIn, controller.getMyEsques);
 
-  app.route('/heartedbricks')
-    .get(isLoggedIn, controller.getHeartedBricks);
+  app.route('/heartedesques')
+    .get(isLoggedIn, controller.getHeartedEsques);
 
-  // bricks of other users
+  // esques of other users
   app.route('/user/:id')
-    .get(controller.getUserBricks);
+    .get(controller.getUserEsques);
 
 
   // ajax endpoint
-  app.route('/api/bricks')
-    .get(controller.ajaxBricks)
+  app.route('/api/esques')
+    .get(controller.ajaxEsques)
     .post(isLoggedIn, controller.ajaxHeart)
     .delete(isLoggedIn, controller.ajaxDelete);
 

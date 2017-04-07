@@ -12,7 +12,7 @@ const imageSchema = new mongoose.Schema({
   linkerProfileImage: { type: String, required: true },
   title: { type: String, required: true },
   hearts: { type: Number, default: 0 } // need to specify uniqueness of hearts
-  // but it's better to have the save on the user because then exposure of a brick
+  // but it's better to have the save on the user because then exposure of a esque
   // will not compromise multiple users.
   // hearting once means it cannot be hearted again by the same user
 });

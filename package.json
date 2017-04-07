@@ -1,7 +1,7 @@
 {
-  "name": "timolawl-imgbrick",
+  "name": "timolawl-pinteresque",
   "version": "1.0.0",
-  "description": "imgBrick, a Free Code Camp full-stack project",
+  "description": "Pinteresque, a Free Code Camp full-stack project",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",

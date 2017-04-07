@@ -5,23 +5,23 @@ const Image = require('../models/image');
 
 function controller () {
 
-  this.getAllBricks = (req, res) => {
+  this.getAllEsques = (req, res) => {
     // need socket if I want to push the changes not just to myself but to others
     // but if that seems like something that is not necessary, then traditional ajax will do
     // methodology seems to be to fetch 
     // I can pass all the information down, but how to render?
     // or do I ajax from the client side script based on the page?
     if (req.isAuthenticated()) {
-      res.render('bricks', { loggedIn: true, path: 'index' });
+      res.render('esques', { loggedIn: true, path: 'index' });
     }
-    else res.render('bricks', { loggedIn: false, path: 'index' });
+    else res.render('esques', { loggedIn: false, path: 'index' });
   };
 
-  this.getAddBrick = (req, res) => {
+  this.getAddEsque = (req, res) => {
     res.render('form', { loggedIn: true });
   };
   
-  this.postBrick = (req, res) => {
+  this.postEsque = (req, res) => {
     // save the new image information to image collection
     const newImage = new Image();
     newImage.link = req.body.link;
@@ -38,30 +38,30 @@ function controller () {
     });
   };
 
-  this.getMyBricks = (req, res) => {
-    res.render('bricks', { loggedIn: true, path: 'mybricks' });
+  this.getMyEsques = (req, res) => {
+    res.render('esques', { loggedIn: true, path: 'myesques' });
   };
 
-  this.getHeartedBricks = (req, res) => {
-    res.render('bricks', { loggedIn: true, path: 'heartedbricks' });
+  this.getHeartedEsques = (req, res) => {
+    res.render('esques', { loggedIn: true, path: 'heartedesques' });
   };
 
 
-  this.getUserBricks = (req, res) => {
+  this.getUserEsques = (req, res) => {
     if (req.isAuthenticated()) {
-      res.render('bricks', { loggedIn: true, path: 'userbricks' });
+      res.render('esques', { loggedIn: true, path: 'useresques' });
     }
-    else res.render('bricks', { loggedIn: false, path: 'userbricks' });
+    else res.render('esques', { loggedIn: false, path: 'useresques' });
   };
 
 
-  this.ajaxBricks = (req, res) => {
-    // match https://timolawl-imgbrick.herokuapp.com/
+  this.ajaxEsques = (req, res) => {
+    // match https://timolawl-imgesque.herokuapp.com/
     // but in dev, match localhost:x000/
     // referer can be spoofed but this is a public get call
     const sanitizedReferer = sanitizeString(req.headers.referer);
     /*
-    if (sanitizedReferer.match(/^https:\/\/timolawl-imgbrick\.herokuapp\.com\//) ||
+    if (sanitizedReferer.match(/^https:\/\/timolawl-imgesque\.herokuapp\.com\//) ||
       sanitizedReferer.match(/^http:\/\/localhost:[35]000\//)) {
       
     }*/
@@ -75,11 +75,11 @@ function controller () {
 
       if (path.match(/^\/$/)) {
         dbQuery = {};
-      } else if (path.match(/^\/mybricks\/?$/i)) {
+      } else if (path.match(/^\/myesques\/?$/i)) {
         dbQuery = { linker: req.user.id };
-      } else if (path.match(/^\/heartedbricks\/?$/i)) {
+      } else if (path.match(/^\/heartedesques\/?$/i)) {
         User.findOne({ _id: req.user.id }).then(user => {
-            Image.find({ _id: { $in: user.heartedBricks }}).lean().then(images => {
+            Image.find({ _id: { $in: user.heartedEsques }}).lean().then(images => {
               res.json(images.map(image => { image.userHearted = true; return image; }));
             });
         });
@@ -97,7 +97,7 @@ function controller () {
           User.findOne({ _id: req.user.id }).then(user => {
             Image.find(dbQuery).lean().then(images => {
               res.json(images.map(image => {
-                if (user.heartedBricks.indexOf(image._id) > -1) { // exists as a hearted brick
+                if (user.heartedEsques.indexOf(image._id) > -1) { // exists as a hearted esque
                   image.userHearted = true;
                 }
                 return image;
@@ -115,15 +115,15 @@ function controller () {
   };
 
   this.ajaxHeart = (req, res) => {
-    User.findOne({ $and: [{ _id: req.user.id }, { heartedBricks: { $nin: [req.body.id] }}]}).exec().then(user => {
+    User.findOne({ $and: [{ _id: req.user.id }, { heartedEsques: { $nin: [req.body.id] }}]}).exec().then(user => {
       if (user) {
-        user.heartedBricks.push(req.body.id); // add the image to be hearted by user
+        user.heartedEsques.push(req.body.id); // add the image to be hearted by user
         user.save();
         Image.findOneAndUpdate({ _id: req.body.id }, { $inc: { hearts: 1 }}, { new: true }).then(image => res.json(image))
         .catch(err => console.error(err));
       }
-      else { // user has already hearted the brick
-        User.findOneAndUpdate({ _id: req.user.id }, { $pull: { heartedBricks: req.body.id }}, { returnNewDocument: true }, err => {
+      else { // user has already hearted the esque
+        User.findOneAndUpdate({ _id: req.user.id }, { $pull: { heartedEsques: req.body.id }}, { returnNewDocument: true }, err => {
           if (err) throw err;
             Image.findOneAndUpdate({ _id: req.body.id }, { $inc: { hearts: -1 }}, { new: true }).then(image => res.json(image));
         });
@@ -136,7 +136,7 @@ function controller () {
     // validate user ability to remove image first
     Image.findOneAndRemove({ $and: [{ _id: req.body.id }, { linker: req.user.id }]}).exec().then(image => {
       // go through all users and remove their hearts from this item since it no longer exists
-      User.update({ heartedBricks: { $in: [req.body.id] }}, { $pull: { heartedBricks: req.body.id}}, { multi: true }, (err) => {
+      User.update({ heartedEsques: { $in: [req.body.id] }}, { $pull: { heartedEsques: req.body.id}}, { multi: true }, (err) => {
         if (err) throw err;
         else res.json({ message: 'success'});
       });
