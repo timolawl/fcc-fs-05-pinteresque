@@ -2,7 +2,7 @@
 
 // es6 modules are not natively supported in V8 yet..
 
-require('dotenv').config(); // loads env vars (don't need in prod)
+//require('dotenv').config(); // loads env vars (don't need in prod)
 
 // built-in requires
 const path = require('path'); // for joining paths
@@ -10,10 +10,6 @@ const path = require('path'); // for joining paths
 // main base tech stack requires
 const express = require('express');
 const app = express();
-
-// socket io requires
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
 
 // other base tech stack requires
 const favicon = require('serve-favicon');
@@ -35,7 +31,7 @@ const MongoStore = require('connect-mongo')(session); // move store from mem to 
 const passport = require('passport');
 
 // development requires
-const morgan = require('morgan'); // allows for every HTTP request to be logged to console
+//const morgan = require('morgan'); // allows for every HTTP request to be logged to console
 
 // custom requires
 const port = process.env.PORT || 5000;
@@ -49,7 +45,6 @@ mongoose.connection.on('error', () => {
 
 
 require('./app/server/controllers/middlewares/passport')(passport); // pass passport for configuration.
-require('./app/server/controllers/socketio')(io); // pass socketio for config?
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/app/server/views'));
@@ -70,7 +65,7 @@ app.use('/static', express.static(path.join(__dirname,'/static')));
 app.use(favicon(path.join(__dirname, '/static/img/favicon.ico')));
 
 
-app.use(morgan('dev')); // log every request to console.
+//app.use(morgan('dev')); // log every request to console.
 
 // configure the session
 const sessionMiddleware = session({
@@ -90,11 +85,11 @@ app.use(flash());
 
 
 routes(app, passport); // apparently it doesn't matter if this is before or after the port is set...
-/*
+
 app.listen(app.get('port'), () => {
   console.log('Node app is running on port', app.get('port'));
 });
-*/
+
 
 
 // set up socket io: http://stackoverflow.com/questions/13095418/how-to-use-passport-with-express-and-socket-io#24859515
@@ -102,14 +97,3 @@ app.listen(app.get('port'), () => {
 // problem is that the session becomes read only, but that should be fine (assuming it doesn't mess with the logout or login features) because the session cookie only stores the ID.
 // but I still need to see if there's even a reason for having socket interact with the session.
 //
-
-io.use(function(socket, next) {
-  sessionMiddleware(socket.request, {}, next);
-});
-
-
-server.listen(app.get('port'), () => {
-  console.log('Socket.io is listening on port', app.get('port'));
-});
-
-
