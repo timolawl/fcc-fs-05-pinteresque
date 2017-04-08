@@ -60,15 +60,12 @@ function controller () {
     // but in dev, match localhost:x000/
     // referer can be spoofed but this is a public get call
     const sanitizedReferer = sanitizeString(req.headers.referer);
-    /*
-    if (sanitizedReferer.match(/^https:\/\/timolawl-imgesque\.herokuapp\.com\//) ||
-      sanitizedReferer.match(/^http:\/\/localhost:[35]000\//)) {
-      
-    }*/
-
+    
+    const path = sanitizedReferer.match(/^https:\/\/timolawl-pinteresque\.herokuapp\.com(.*)$/i) && sanitizedReferer.match(/^https:\/\/timolawl-pinteresque\.herokuapp\.com(.*)$/i)[1].toLowerCase();
+/*
     const path = sanitizedReferer.match(/^http:\/\/localhost:[35]000(.*)$/i) && 
       sanitizedReferer.match(/^http:\/\/localhost:[35]000(.*)$/i)[1].toLowerCase();
-
+*/
     let dbQuery = null;
 
     if (path) {
