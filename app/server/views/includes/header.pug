@@ -19,5 +19,9 @@ html(lang='en')
             li.site-nav__list.heartedesques: a(href='/heartedesques') Hearted Esques
             li.site-nav__list.logout: a(href='/logout') Log Out
           else
-            li.site-nav__list.login: a(href='/login/twitter') Log In
+            li.site-nav__list.login
+              a.login__link(href='/login/twitter')
+                button.login__button
+                  img.login__image(src='/static/img/twitter.svg') 
+                  .login__text Log in with Twitter
       .site-nav--document-flow-placeholder.is-displayed
