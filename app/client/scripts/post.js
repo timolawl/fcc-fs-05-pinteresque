@@ -40,7 +40,12 @@ function createEsque (datum, fragment) {
   const user = newEsque.querySelector('.esque__user');
 
   newEsque.firstChild.setAttribute('data-id', datum._id);
-  image.src = datum.link;
+
+  if (datum.link.startsWith('http://')) {
+    image.src = datum.link.substr(5);
+  }
+  else image.src = datum.link; 
+
   image.title = datum.title;
   image.alt = datum.title;
   newEsque.querySelector('.esque__title').textContent = datum.title;

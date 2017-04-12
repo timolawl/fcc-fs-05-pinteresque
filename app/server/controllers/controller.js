@@ -76,7 +76,7 @@ function controller () {
         dbQuery = { linker: req.user.id };
       } else if (path.match(/^\/heartedesques\/?$/i)) {
         User.findOne({ _id: req.user.id }).then(user => {
-            Image.find({ _id: { $in: user.heartedEsques }}).lean().then(images => {
+            Image.find({ _id: { $in: user.heartedEsques }}).sort({ _id: -1 }).lean().then(images => {
               res.json(images.map(image => { image.userHearted = true; return image; }));
             });
         });
@@ -92,7 +92,7 @@ function controller () {
         // if user is logged in:
         if (req.user) {
           User.findOne({ _id: req.user.id }).then(user => {
-            Image.find(dbQuery).lean().then(images => {
+            Image.find(dbQuery).sort({ _id: -1 }).lean().then(images => {
               res.json(images.map(image => {
                 if (user.heartedEsques.indexOf(image._id) > -1) { // exists as a hearted esque
                   image.userHearted = true;
@@ -104,7 +104,7 @@ function controller () {
         }
         // user is not logged in:
         else {
-          Image.find(dbQuery).then(images => res.json(images));
+          Image.find(dbQuery).sort({ _id: -1 }).then(images => res.json(images));
         }
       }
 

@@ -15,6 +15,7 @@ const imageSchema = new mongoose.Schema({
   // but it's better to have the save on the user because then exposure of a esque
   // will not compromise multiple users.
   // hearting once means it cannot be hearted again by the same user
+  // should have had a date added for sorting purposes
 });
 
 module.exports = mongoose.model('Image', imageSchema);
