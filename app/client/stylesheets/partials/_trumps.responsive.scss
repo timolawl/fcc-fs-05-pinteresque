@@ -1,0 +1,9 @@
+// _trumps.responsive.scss
+//
+// responsive differences
+
+@media screen and (max-width: 400px) {
+  html {
+    font-size: 12px; // set base rem font for small screens
+  }
+}

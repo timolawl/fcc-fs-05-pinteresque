@@ -43,7 +43,6 @@
     display: inline-block;
     margin: 0 1rem;
     height: 50px;
-    width: 200px;
     list-style-type: none;
     &:not([class~='login']) {
       padding-top: 1rem;
@@ -66,6 +65,8 @@
 
 // twitter login button
 .login {
+  width: 200px;
+
   &__link {
     display: block;
     position: absolute;
