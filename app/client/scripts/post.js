@@ -2,7 +2,7 @@
 
 window.onload = function () {
   if (!location.pathname.match(/^\/addesque\/?$/i)) {
-    fetch('/api/esques', { credentials: 'same-origin' })
+    fetch('/api/esques', { mode: 'same-origin', credentials: 'same-origin' })
       .then(res => res.json())
       .then(json => loadImages(json))
       .catch(err => console.error(err));
@@ -64,7 +64,7 @@ function createEsque (datum, fragment) {
 
   // send: the id of the esque, the user can be inferred from the req itself.
   newEsque.querySelector('.esque__favorite').addEventListener('click', () => {
-    fetch('/api/esques', { method: 'POST', credentials: 'same-origin' , headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: datum._id }) })
+    fetch('/api/esques', { method: 'POST', mode: 'same-origin', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: datum._id }) })
       .then(res => res.json())
       .then(json => {
         counter.textContent = json.hearts;
@@ -84,7 +84,7 @@ function createEsque (datum, fragment) {
     });
 
     newEsque.querySelector('.esque__close').addEventListener('click', () => {
-      fetch('/api/esques', { method: 'DELETE', credentials: 'same-origin', headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Methods': 'POST, GET, DELETE' }, body: JSON.stringify({ id: datum._id }) })
+      fetch('/api/esques', { method: 'DELETE', mode: 'same-origin', credentials: 'same-origin', headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Methods': 'POST, GET, DELETE' }, body: JSON.stringify({ id: datum._id }) })
         .then(res => res.json())
         .then(json => {
           // remove the entire element from the displayi
